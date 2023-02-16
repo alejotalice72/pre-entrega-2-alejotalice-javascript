@@ -1,22 +1,51 @@
-const products = [{id: 1, name: "El señor de los anillos", cantidad:5},{id: 2, name: "Harry Potter", cantidad: 3},{id: 3, name:"Sherlock Holmes", cantidad: 2},{id: 4, name:"Pinocho", cantidad: 1}];
-class User {
-    constructor(userName, age, saldo) {
-        this.userNamme = userName;
-        this.age = age;
-        this.saldo = saldo;
+// PreEntrega 2 Alejo Talice
+productos = [];
+cart = [];
+
+class Producto {
+    constructor(name, price, description){
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.sold = false;
     }
-    comprar(monto) {
-        this.saldo -= monto;
-    }
-    agregarSaldo(monto) {
-        this.saldo += monto;
+    addToCart() {
     }
 }
 
-alert("-- Creando un nuevo usuario --");
-const userName = prompt("Ingrese su nombre de usuario: ");
-const age = parseInt(prompt("Ingrese su edad: "));
-const saldo = parseInt(prompt("Ingrese su saldo inicial: "));
-const user1 = new User(userName, age, saldo);
+const agregarProducto = () => {
+    let name = prompt("Ingrese el nombre del producto: ");
+    let price = parseInt(prompt("Ingrese el precio del producto: "));
+    let description = prompt("Ingrese una breve descripcion del producto: ");
+    productos.push(new Producto(name, price, description));
+};
 
-console.log(user1);
+agregarProducto();
+agregarProducto();
+
+// Agregar Id en nuevo array
+const productosId = productos.map((prod)=>{
+    return {
+        id: Math.round(Math.random() * 100),
+        name: prod.name,
+        price: prod.price,
+        description: prod.description
+    }
+});
+
+// Mostrar productos 
+let contenedorHtml = document.getElementById('products__section');
+for (const producto of productosId) {
+    let contenedor = document.createElement('div');
+    contenedor.className = "card"
+    contenedor.style = "width: 18rem;"
+    contenedor.innerHTML = `<img src="img/mirtha.png" class="card-img-top" alt="Imagen de prueba">
+                            <div class="card-body">
+                                <h5 class="card-title">${producto.name} $${producto.price}</h3>
+                                <p class="card-text">${producto.description}</p>
+                                <a href="#" class="btn btn-primary">Añadir al carrito</a>
+                            </div>`;
+    contenedorHtml.appendChild(contenedor);
+}   
+
+console.log(productosId);
